@@ -2,7 +2,7 @@
 
 GridCraft is a high-performance, real-time shared grid application built with an OLED Dark Mode theme. Multiple users can claim cells (blocks) on a 40x40 grid and view each other's claims instantly.
 
-![GridCraft UI Mockup](https://raw.githubusercontent.com/Gautam-Bharadwaj/GridCraft/main/mockup.png) *(Placeholder for UI screen)*
+![GridCraft UI](screenshot.png)
 
 ## System Architecture
 
