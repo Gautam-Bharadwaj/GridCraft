@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useWebSocket } from './hooks/useWebSocket';
 import Header from './components/Header';
 import Grid from './components/Grid';
 import Sidebar from './components/Sidebar';
-import { GridMap, LeaderboardEntry, OnlineUser } from './types';
+import { GridMap, LeaderboardEntry, OnlineUser, ActivityLog, Toast } from './types';
 import './index.css';
 
 export default function App() {
@@ -12,6 +12,7 @@ export default function App() {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [onlineUsers, setOnlineUsers] = useState<OnlineUser[]>([]);
   const [onlineCount, setOnlineCount] = useState(0);
+  const [cooldownUntil, setCooldownUntil] = useState(0);
 
   const { send } = useWebSocket({
     onMessage: (msg) => {
@@ -21,6 +22,8 @@ export default function App() {
         setOnlineUsers(msg.payload.users);
         setOnlineCount(msg.payload.onlineCount);
         setReady(true);
+      } else if (msg.type === 'COOLDOWN_ERR') {
+        setCooldownUntil(Date.now() + msg.payload.cooldownRemainingMs);
       }
     }
   });
