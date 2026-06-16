@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="GridCraft — Real-time multiplayer grid conquest. Claim tiles, compete with players worldwide, watch blocks change hands live." />
+    <meta name="theme-color" content="#000000" />
+
+    <title>GridCraft — Real-time Shared Grid</title>
+
+    <!-- Favicon: inline SVG grid -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23000'/><rect x='4' y='4' width='10' height='10' rx='2' fill='%2322c55e'/><rect x='18' y='4' width='10' height='10' rx='2' fill='%233b82f6'/><rect x='4' y='18' width='10' height='10' rx='2' fill='%23f59e0b'/><rect x='18' y='18' width='10' height='10' rx='2' fill='%238b5cf6'/></svg>" />
+
+    <!-- Preconnect for Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Space Grotesk (UI) + Orbitron (mono/logo) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Prevent FOUC */
+      html { background: #000; }
+      body { background: #000; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
