@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { GridMap } from '../types';
 
 interface GridProps {
@@ -7,8 +7,11 @@ interface GridProps {
   myId: string;
 }
 
-export default function Grid({ grid, onClaimBlock }: GridProps) {
+export default function Grid({ grid, onClaimBlock, myId }: GridProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const [scale, setScale] = useState(1);
+  const [offsetX, setOffsetX] = useState(0);
+  const [offsetY, setOffsetY] = useState(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -16,27 +19,31 @@ export default function Grid({ grid, onClaimBlock }: GridProps) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    ctx.fillStyle = '#0a0a0c';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.strokeStyle = '#1e1e24';
-    ctx.lineWidth = 1;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.translate(offsetX, offsetY);
+    ctx.scale(scale, scale);
 
     const size = 20;
     for (let i = 0; i < 40; i++) {
       for (let j = 0; j < 40; j++) {
         const id = i * 40 + j;
         const cell = grid[id];
-        ctx.fillStyle = cell ? cell.color : '#000000';
-        ctx.fillRect(j * size, i * size, size, size);
-        ctx.strokeRect(j * size, i * size, size, size);
+        ctx.fillStyle = cell ? cell.color : '#16161a';
+        ctx.fillRect(j * size, i * size, size - 1, size - 1);
       }
     }
-  }, [grid]);
+
+    ctx.restore();
+  }, [grid, scale, offsetX, offsetY]);
 
   return (
     <div className="grid-container">
-      <canvas ref={canvasRef} width={800} height={800} style={{ border: '1px solid #333' }} />
+      <canvas ref={canvasRef} width={800} height={800} />
+      <div className="zoom-controls">
+        <button onClick={() => setScale(s => Math.min(s + 0.1, 3))}>+</button>
+        <button onClick={() => setScale(s => Math.max(s - 0.1, 0.5))}>-</button>
+      </div>
     </div>
   );
 }
