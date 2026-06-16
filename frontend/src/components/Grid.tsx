@@ -12,6 +12,7 @@ export default function Grid({ grid, onClaimBlock, myId }: GridProps) {
   const [scale, setScale] = useState(1);
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
+  const [tooltip, setTooltip] = useState<{ x: number; y: number; content: string } | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -40,10 +41,11 @@ export default function Grid({ grid, onClaimBlock, myId }: GridProps) {
   return (
     <div className="grid-container">
       <canvas ref={canvasRef} width={800} height={800} />
-      <div className="zoom-controls">
-        <button onClick={() => setScale(s => Math.min(s + 0.1, 3))}>+</button>
-        <button onClick={() => setScale(s => Math.max(s - 0.1, 0.5))}>-</button>
-      </div>
+      {tooltip && (
+        <div className="grid-tooltip" style={{ left: tooltip.x, top: tooltip.y }}>
+          {tooltip.content}
+        </div>
+      )}
     </div>
   );
 }
